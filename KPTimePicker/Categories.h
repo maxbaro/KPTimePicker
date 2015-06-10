@@ -11,7 +11,7 @@
 #define degrees(radians) (radians * 180 / M_PI)
 #define color(r,g,b,a) [UIColor colorWithRed: r/255.0 green: g/255.0 blue: b/255.0 alpha:a]
 #define OSVER [KPUtil OSVersion]
-#define sizeWithFont(string,font) ((OSVER < 7) ? [string sizeWithFont:font] : [string sizeWithAttributes:@{NSFontAttributeName:font}])
+#define MBsizeWithFont(string,font) ((OSVER < 7) ? [string sizeWithFont:font] : [string sizeWithAttributes:@{NSFontAttributeName:font}])
 #define kIsIphone5Size (fabs((double)[[UIScreen mainScreen] bounds].size.height - (double) 568) < DBL_EPSILON)
 #define valForScreen(iphone4, iphone5) (kIsIphone5Size ? iphone5 : iphone4)
 
