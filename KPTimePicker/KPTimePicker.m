@@ -292,7 +292,6 @@
         
         self.confirmButton = [SlowHighlightIcon buttonWithType:UIButtonTypeCustom];
         self.confirmButton.backgroundColor = [UIColor clearColor];
-        [self.confirmButton setBackgroundImage:[self.confirmColor image] forState:UIControlStateHighlighted];
         self.confirmButton.frame = CGRectMake(0, 0, 2*kDefActualSize, 2*kDefActualSize);
         
         //self.confirmButton.layer.borderWidth = LINE_SIZE;
@@ -344,6 +343,8 @@
     if(!self.pickingDate) self.pickingDate = [NSDate date];
     else [self updateForDate:self.pickingDate];
     CGFloat heightForContent = self._centerPoint.y - self.timeSlider.frame.size.height/2;
+    
+    [self.confirmButton setBackgroundImage:[self.confirmColor image] forState:UIControlStateHighlighted];
     
     CGFloat heightForDay = MBsizeWithFont(@"abcdefghADB",self.dayLabel.font).height;
     CGFloat heightForTime = MBsizeWithFont(@"08:00pm",self.clockLabel.font).height;
