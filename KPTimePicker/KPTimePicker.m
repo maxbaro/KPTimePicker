@@ -346,8 +346,8 @@
     
     [self.confirmButton setBackgroundImage:[self.confirmColor image] forState:UIControlStateHighlighted];
     
-    CGFloat heightForDay = MBsizeWithFont(@"abcdefghADB",self.dayLabel.font).height;
-    CGFloat heightForTime = MBsizeWithFont(@"08:00pm",self.clockLabel.font).height;
+    CGFloat heightForDay = sizeWithFont(@"abcdefghADB",self.dayLabel.font).height;
+    CGFloat heightForTime = sizeWithFont(@"08:00pm",self.clockLabel.font).height;
     CGFloat iconHeigt = self.sunImage.image.size.height;
     
     CGFloat overflowSpace = heightForContent - heightForDay - heightForTime - iconHeigt;
