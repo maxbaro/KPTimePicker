@@ -125,7 +125,7 @@
 }
 #pragma mark Actions
 -(void)pressedBackButton:(UIButton*)sender{
-    [self.delegate timePicker:self selectedDate:nil];
+    [self.delegate timePicker:self selectedDate:self.pickingDate];
 }
 -(void)pressedConfirmButton:(UIButton*)sender{
     [self.delegate timePicker:self selectedDate:self.pickingDate];
