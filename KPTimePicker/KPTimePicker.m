@@ -324,7 +324,7 @@
         [self addSubview:self.backButton];
         
         self.deleteButton = [SlowHighlightIcon buttonWithType:UIButtonTypeCustom];
-        self.deleteButton.frame = CGRectMake(self.width - kBackButtonSize + 7.5f,  kBackMargin + 15, kBackButtonSize, kBackButtonSize);
+        self.deleteButton.frame = CGRectMake(self.frame.size.width - kBackButtonSize + 7.5f,  kBackMargin + 15, kBackButtonSize, kBackButtonSize);
         self.deleteButton.autoresizingMask = (UIViewAutoresizingFlexibleRightMargin|UIViewAutoresizingFlexibleTopMargin);
         [self.deleteButton setImage:[UIImage imageNamed:@"TrashCan"] forState:UIControlStateNormal];
         [self.deleteButton setImage:[UIImage imageNamed:@"TrashCan"] forState:UIControlStateHighlighted];
