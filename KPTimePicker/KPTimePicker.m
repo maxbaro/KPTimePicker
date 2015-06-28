@@ -369,7 +369,7 @@
     CGFloat spacing = overflowSpace / 3;
     
 
-    NSString *title = NSLocalizedString(@"Erinnerung festlegen", @"");
+    NSString *title = NSLocalizedString(@"KPTimePicker: Title : Lable", @"KPTimePicker: Title : Lable : Erinnerung festlegen");
     NSMutableParagraphStyle *paragraphStyle = [NSMutableParagraphStyle new];
     paragraphStyle.minimumLineHeight = 0;
     paragraphStyle.alignment = NSTextAlignmentCenter;
