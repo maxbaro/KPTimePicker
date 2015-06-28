@@ -24,13 +24,13 @@
 #define kMinutesInHalfDay 720
 
 #define kSunImageDistance valForScreen(160, 100)
-#define kClockLabelFont [UIFont fontWithName:@"HelveticaNeue-Light" size:valForScreen(55,75)]
+#define kClockLabelFont [UIFont thinkiesLightLarge]
 #define kDayLabelFont [UIFont fontWithName:@"HelveticaNeue-Light" size:valForScreen(16,19)]
 #define kDefMiddleButtonRadius 60
 #define kDefActualSize valForScreen(85,93)
 #define kDefClearMiddle 45
 
-#define kBackMargin 10
+#define kBackMargin 0
 
 #define kOpenedSunAngle valForScreen(70,60)
 #define kExtraAngleForIcons 22
@@ -71,6 +71,7 @@
 @property (nonatomic,strong) UIImageView *timeSlider;
 @property (nonatomic,strong) UIButton *confirmButton;
 @property (nonatomic,strong) UIButton *backButton;
+@property (nonatomic,strong) UIButton *deleteButton;
 @property (nonatomic,strong) UIImageView *sunImage;
 @property (nonatomic,strong) UIImageView *moonImage;
 @property (nonatomic,strong) UILabel *dayLabel;
@@ -127,6 +128,11 @@
 -(void)pressedBackButton:(UIButton*)sender{
     [self.delegate timePicker:self selectedDate:self.pickingDate];
 }
+
+-(void)pressedDeleteButton:(UIButton*)sender{
+    [self.delegate timePicker:self selectedDate:nil];
+}
+
 -(void)pressedConfirmButton:(UIButton*)sender{
     [self.delegate timePicker:self selectedDate:self.pickingDate];
 }
@@ -210,7 +216,7 @@
     if([self.delegate respondsToSelector:@selector(timePicker:clockForDate:)]) timeString = [self.delegate timePicker:self clockForDate:date];
     if(!timeString) timeString = [[dateFormatter stringFromDate:date] lowercaseString];
     self.clockLabel.text = timeString;
-    self.dayLabel.text = dayString;
+    //self.dayLabel.text = dayString;
     self.backgroundColor = [self colorForDate:date];
     if(self.hideIcons){
         self.sunImage.hidden = YES;
@@ -310,12 +316,21 @@
         [self addSubview:self.timeSlider];
         
         self.backButton = [SlowHighlightIcon buttonWithType:UIButtonTypeCustom];
-        self.backButton.frame = CGRectMake(kBackMargin, self.bounds.size.height-kBackButtonSize-kBackMargin, kBackButtonSize, kBackButtonSize);
+        self.backButton.frame = CGRectMake(-7.5f, kBackMargin + 15, kBackButtonSize, kBackButtonSize);
         self.backButton.autoresizingMask = (UIViewAutoresizingFlexibleRightMargin|UIViewAutoresizingFlexibleTopMargin);
-        [self.backButton setImage:[UIImage imageNamed:@"round_backarrow_big"] forState:UIControlStateNormal];
-        [self.backButton setImage:[UIImage imageNamed:@"round_backarrow_big-high"] forState:UIControlStateHighlighted];
+        [self.backButton setImage:[UIImage imageNamed:@"MainVCBackArrow"] forState:UIControlStateNormal];
+        [self.backButton setImage:[UIImage imageNamed:@"MainVCBackArrow"] forState:UIControlStateHighlighted];
         [self.backButton addTarget:self action:@selector(pressedBackButton:) forControlEvents:UIControlEventTouchUpInside];
         [self addSubview:self.backButton];
+        
+        self.deleteButton = [SlowHighlightIcon buttonWithType:UIButtonTypeCustom];
+        self.deleteButton.frame = CGRectMake(self.width - kBackButtonSize + 7.5f,  kBackMargin + 15, kBackButtonSize, kBackButtonSize);
+        self.deleteButton.autoresizingMask = (UIViewAutoresizingFlexibleRightMargin|UIViewAutoresizingFlexibleTopMargin);
+        [self.deleteButton setImage:[UIImage imageNamed:@"TrashCan"] forState:UIControlStateNormal];
+        [self.deleteButton setImage:[UIImage imageNamed:@"TrashCan"] forState:UIControlStateHighlighted];
+        [self.deleteButton addTarget:self action:@selector(pressedDeleteButton:) forControlEvents:UIControlEventTouchUpInside];
+        [self addSubview:self.deleteButton];
+        
         
         UIPanGestureRecognizer *panGestureRecognizer = [[UIPanGestureRecognizer alloc] initWithTarget:self action:@selector(panGestureRecognized:)];
         panGestureRecognizer.delegate = self;
@@ -353,10 +368,25 @@
     CGFloat overflowSpace = heightForContent - heightForDay - heightForTime - iconHeigt;
     CGFloat spacing = overflowSpace / 3;
     
-    self.dayLabel.frame = CGRectMake(0, spacing, self.bounds.size.width, heightForDay);
-    self.clockLabel.frame = CGRectMake(0, spacing+heightForDay, self.bounds.size.width, heightForTime);
+
+    NSString *title = NSLocalizedString(@"Erinnerung festlegen", @"");
+    NSMutableParagraphStyle *paragraphStyle = [NSMutableParagraphStyle new];
+    paragraphStyle.minimumLineHeight = 0;
+    paragraphStyle.alignment = NSTextAlignmentCenter;
     
-    self._distanceForIcons = self.timeSlider.frame.size.height/2 + spacing*1.5 + iconHeigt/2;
+    NSAttributedString *titleName = [[NSAttributedString alloc]
+                                     initWithString:title.uppercaseString attributes:
+                                     @{NSParagraphStyleAttributeName : paragraphStyle,
+                                       NSKernAttributeName : @1.5,
+                                       NSFontAttributeName : [UIFont thinkiesMediumLarge],
+                                       NSForegroundColorAttributeName: [UIColor whiteColor]}];
+    
+    self.dayLabel.attributedText = titleName;
+    
+    self.dayLabel.frame = CGRectMake(0, self.backButton.frame.origin.y + heightForDay - 3, self.bounds.size.width, heightForDay);
+    self.clockLabel.frame = CGRectMake(0, spacing+heightForDay + 10, self.bounds.size.width, heightForTime);
+    
+    self._distanceForIcons = self.timeSlider.frame.size.height/2 + spacing*1.5 + iconHeigt/2 -30.0f;
 }
 -(BOOL)gestureRecognizer:(UIGestureRecognizer *)gestureRecognizer shouldRecognizeSimultaneouslyWithGestureRecognizer:(UIGestureRecognizer *)otherGestureRecognizer{
     return YES;
