@@ -361,8 +361,12 @@
     
     [self.confirmButton setBackgroundImage:[self.confirmColor image] forState:UIControlStateHighlighted];
     
+    #pragma clang diagnostic push
+    #pragma clang diagnostic ignored "-Wdeprecated-declarations"
     CGFloat heightForDay = sizeWithFont(@"abcdefghADB",self.dayLabel.font).height;
     CGFloat heightForTime = sizeWithFont(@"08:00pm",self.clockLabel.font).height;
+    #pragma clang diagnostic pop
+    
     CGFloat iconHeigt = self.sunImage.image.size.height;
     
     CGFloat overflowSpace = heightForContent - heightForDay - heightForTime - iconHeigt;
